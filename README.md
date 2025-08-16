@@ -51,6 +51,6 @@ This is the page where you will get to know how the SECRETARY.AI works.
 This is the page where you will have to upload a prerecorded audio file, and then you will get to see the transcription of the audio file along with the action plan, drafted e-mails and the summary.
 
 
-
+Built for HackAura-Hackathon by Team Morphin. 
 
 

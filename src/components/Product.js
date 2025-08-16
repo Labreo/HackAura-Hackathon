@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadFull } from "tsparticles";
 
 const Product = ({ onGoBack }) => {
     const [view, setView] = useState('upload');
@@ -8,17 +10,17 @@ const Product = ({ onGoBack }) => {
     const [results, setResults] = useState(null);
     const [activeTab, setActiveTab] = useState('transcript');
     const [message, setMessage] = useState({ text: '', type: 'success', visible: false });
+    const [init, setInit] = useState(false);
 
     const fileInputRef = useRef(null);
 
+    // Initializes the tsParticles engine
     useEffect(() => {
-        if (window.particlesJS) {
-            window.particlesJS('particles-js', {
-                "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A2BE2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } },
-                "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } },
-                "retina_detect": true
-            });
-        }
+        initParticlesEngine(async (engine) => {
+            await loadFull(engine);
+        }).then(() => {
+            setInit(true);
+        });
     }, []);
     
     useEffect(() => {
@@ -142,36 +144,32 @@ const Product = ({ onGoBack }) => {
         });
     };
 
-const getAiInsights = async (file) => {
-    const audioBase64 = await fileToBase64(file);
+    const getAiInsights = async (file) => {
+        const audioBase64 = await fileToBase64(file);
+        const apiUrl = '/api/generateInsights'; 
+        const payload = {
+            file: {
+                mimeType: file.type,
+                data: audioBase64
+            }
+        };
 
-    // The API URL is now your own serverless function
-    const apiUrl = '/api/generateInsights'; 
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
 
-    const payload = {
-        file: {
-            mimeType: file.type,
-            data: audioBase64
+        if (!response.ok) {
+            const errorBody = await response.json();
+            console.error("API Error from serverless function:", errorBody);
+            throw new Error(`Request failed with status ${response.status}`);
         }
+
+        const result = await response.json(); 
+        return result; 
     };
 
-    // The API key is NO LONGER needed here
-    const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-        const errorBody = await response.json();
-        console.error("API Error from serverless function:", errorBody);
-        throw new Error(`Request failed with status ${response.status}`);
-    }
-
-    // The serverless function already parses the JSON, so you just need to get it
-    const result = await response.json(); 
-    return result; 
-};
     const renderActionItems = () => {
         if (!results?.actionItems || results.actionItems.length === 0) {
             return <div className="results-card empty-state col-span-full"><p>No action items were identified in this meeting.</p></div>;
@@ -204,7 +202,7 @@ const getAiInsights = async (file) => {
                     --font-family: 'Inter', sans-serif;
                 }
                 body { background-color: var(--bg-dark); color: var(--text-primary); font-family: var(--font-family); overflow-x: hidden; }
-                #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+                #tsparticles { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
                 .main-container {
                     background: var(--bg-container); border: 1px solid var(--border-color); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
                     z-index: 10; width: 100%; max-width: 64rem; margin: auto; padding: 2.5rem; border-radius: 1rem; box-shadow: var(--shadow-lg);
@@ -271,7 +269,16 @@ const getAiInsights = async (file) => {
                 .message-box.hidden { opacity: 0; transform: translateY(-20px); }
             `}</style>
             
-            <div id="particles-js"></div>
+            {init && (
+                <Particles
+                    id="tsparticles"
+                    options={{
+                        "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A2BE2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } },
+                        "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } },
+                        "retina_detect": true
+                    }}
+                />
+            )}
 
             <div className="main-container">
                 {view === 'upload' && (

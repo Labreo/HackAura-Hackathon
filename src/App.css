@@ -1,3 +1,169 @@
+/* Consolidated and Corrected CSS */
+
+/* --- Base and Tailwind Imports --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0c0a1e;
+  color: #e0e0e0;
+  overflow-x: hidden;
+}
+
+/* --- Corrected Particle Background Style --- */
+#tsparticles {
+  position: fixed; /* Keeps the background in place even when you scroll */
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Puts the canvas behind all other content */
+}
+
+
+/* --- General and Reusable Styles --- */
+.gradient-bg {
+  background: radial-gradient(circle at 50% 0%, rgba(58, 38, 179, 0.3) 0%, rgba(12, 10, 30, 0) 40%);
+}
+
+.hero-glow {
+  text-shadow: 0 0 15px rgba(138, 92, 245, 0.6), 0 0 30px rgba(138, 92, 245, 0.4);
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.feature-card:hover {
+  transform: translateY(-15px) scale(1.05); 
+  border-color: #8A2BE2; 
+  box-shadow: 0 10px 40px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.2); 
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #8A2BE2 0%, #4B0082 100%);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+}
+
+.btn-primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+
+/* --- Animation Styles --- */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInAnimation 0.8s ease-out forwards;
+}
+
+@keyframes fadeInAnimation {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* --- Component-Specific Styles --- */
+.main-container {
+    background: rgba(22, 18, 48, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 10;
+}
+
+.file-drop-area, .file-drop-zone {
+  transition: all 0.3s ease-in-out;
+  border-style: dashed;
+  border-color: rgba(138, 92, 245, 0.4);
+  background: rgba(138, 92, 245, 0.05);
+}
+
+.file-drop-area:hover, .file-drop-area.dragover,
+.file-drop-zone:hover, .file-drop-zone.dragover {
+  background-color: rgba(138, 92, 245, 0.1);
+  border-color: rgba(138, 92, 245, 0.8);
+  transform: scale(1.02);
+}
+
+.tab-btn {
+  transition: color 0.3s ease, border-color 0.3s ease;
+  border-bottom: 2px solid transparent;
+  color: #a0aec0;
+  background: none;
+  cursor: pointer;
+  padding: 0.75rem 0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  color: #8A2BE2;
+  border-bottom: 3px solid #8A2BE2;
+  font-weight: bold;
+}
+
+.tab-btn:hover:not(.active) {
+  color: #ffffff;
+}
+
+
+/* --- Hover Effects --- */
+footer h2, footer p, .welcome-heading {
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+footer h2:hover {
+  transform: scale(1.03);
+}
+
+footer .text-lg:hover {
+  transform: scale(1.05);
+}
+
+.welcome-heading:hover {
+  transform: scale(1.05);
+}
+
+
+/* --- Legacy App.css Styles (if needed) --- */
 .App {
   text-align: center;
 }
@@ -35,335 +201,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-/* src/index.css */
-
-/* You'll need to install Tailwind CSS and add it to your project first */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #0c0a1e;
-  color: #e0e0e0;
-  overflow-x: hidden;
-}
-
-.gradient-bg {
-  background: radial-gradient(circle at 50% 0%, rgba(58, 38, 179, 0.3) 0%, rgba(12, 10, 30, 0) 40%);
-}
-
-.hero-glow {
-  text-shadow: 0 0 15px rgba(138, 92, 245, 0.6), 0 0 30px rgba(138, 92, 245, 0.4);
-}
-
-.feature-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
-}
-
-.fade-in-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.btn-primary {
-  background: linear-gradient(90deg, #8A2BE2 0%, #4B0082 100%);
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-}
-
-.btn-primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
-}
-
-#particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-/* src/Product.css */
-
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0c0a1e;
-    color: #e0e0e0;
-    overflow-x: hidden;
-}
-
-#particles-js {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-
-.main-container {
-    background: rgba(22, 18, 48, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    z-index: 10;
-}
-
-.hero-glow {
-    text-shadow: 0 0 15px rgba(138, 92, 245, 0.6), 0 0 30px rgba(138, 92, 245, 0.4);
-}
-
-.file-drop-area {
-    transition: all 0.3s ease-in-out;
-    border-style: dashed;
-    border-color: rgba(138, 92, 245, 0.4);
-    background: rgba(138, 92, 245, 0.05);
-}
-
-.file-drop-area.dragover, .file-drop-area:hover {
-    background-color: rgba(138, 92, 245, 0.1);
-    border-color: rgba(138, 92, 245, 0.8);
-    transform: scale(1.02);
-}
-
-.btn-primary {
-    background: linear-gradient(90deg, #8A2BE2 0%, #4B0082 100%);
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-}
-
-.btn-primary:hover:not(:disabled) {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
-}
-
-.btn-primary:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* Typewriter cursor effect */
-#transcriptOutput {
-    border-right: .15em solid #8A2BE2;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    animation: blink-caret .75s step-end infinite;
-}
-
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: #8A2BE2; }
-}
-
-/* Fade-in animation */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInAnimation 0.8s ease-out forwards;
-}
-
-@keyframes fadeInAnimation {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* src/Results.css */
-
-/* ... other styles ... */
-
-.tab-btn {
-  /* This is the base style for your tab buttons */
-  transition: color 0.3s ease, border-color 0.3s ease;
-  border-bottom: 2px solid transparent; /* Set a transparent border at the bottom */
-  color: #a0aec0; /* Default text color for inactive tabs */
-  background: none;
-  cursor: pointer;
-  padding: 0.75rem 0;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-/* This rule applies when the button has the 'active' class */
-.tab-btn.active {
-  color: #8A2BE2; /* The purple text color */
-  border-bottom: 3px solid #8A2BE2; /* The purple underline, slightly thicker */
-  font-weight: bold; /* Make the active tab text bold */
-}
-
-/* Add a hover effect for inactive tabs */
-.tab-btn:hover:not(.active) {
-  color: #ffffff; /* Change text to white on hover for inactive tabs */
-}
-/* src/index.css */
-
-/* You'll need to install Tailwind CSS and add it to your project first */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #0c0a1e;
-  color: #e0e0e0;
-  overflow-x: hidden;
-}
-
-.gradient-bg {
-  background: radial-gradient(circle at 50% 0%, rgba(58, 38, 179, 0.3) 0%, rgba(12, 10, 30, 0) 40%);
-}
-
-.hero-glow {
-  text-shadow: 0 0 15px rgba(138, 92, 245, 0.6), 0 0 30px rgba(138, 92, 245, 0.4);
-}
-
-.feature-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s ease; /* Adjusted transition for a smoother effect */
-  backdrop-filter: blur(10px);
-}
-
-.feature-card:hover {
-  transform: translateY(-15px) scale(1.05); /* Lifts the card and enlarges it */
-  border-color: #8A2BE2; /* Adds a purple border on hover */
-  box-shadow: 0 10px 40px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.2); /* Creates a more pronounced, glowing effect */
-}
-
-.fade-in-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.btn-primary {
-  background: linear-gradient(90deg, #8A2BE2 0%, #4B0082 100%);
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-}
-
-.btn-primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
-}
-
-#particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-/* src/index.css */
-
-.feature-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  /* Smoother transition for transform, shadow, and border */
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-  backdrop-filter: blur(10px);
-}
-
-.feature-card:hover {
-  /* Lifts the card up and enlarges it */
-  transform: translateY(-15px) scale(1.05); 
-  /* Adds a purple border on hover */
-  border-color: #8A2BE2; 
-  /* Creates a more pronounced, glowing purple effect */
-  box-shadow: 0 10px 40px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.2); 
-}
-
-/* src/index.css */
-
-/* Add this to the end of the file */
-
-/* --- Footer Hover Effects --- */
-
-/* Base styles for a smooth transition */
-footer h2,
-footer p {
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Enlarge the 'SECRETARY.AI' title on hover */
-footer h2:hover {
-  transform: scale(1.03); /* A subtle 3% enlargement */
-  cursor: pointer;
-}
-
-/* Enlarge 'The future of meetings' subtitle on hover */
-footer .text-lg:hover {
-  transform: scale(1.05); /* A slightly larger 5% enlargement */
-  cursor: pointer;
-}
-.welcome-heading {
-  /* Smooth transition for the transform property */
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: pointer;
-}
-
-.welcome-heading:hover {
-  /* Enlarge the text by 5% on hover */
-  transform: scale(1.05);
-}
-
-/* --- Styles for the Product Page File Drop Area --- */
-.file-drop-zone {
-  transition: all 0.3s ease-in-out;
-  border-style: dashed;
-  border-color: rgba(138, 92, 245, 0.4);
-  background: rgba(138, 92, 245, 0.05);
-}
-
-.file-drop-zone:hover, .file-drop-zone.dragover {
-  background-color: rgba(138, 92, 245, 0.1);
-  border-color: rgba(138, 92, 245, 0.8);
-  transform: scale(1.02);
 }

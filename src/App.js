@@ -5,15 +5,26 @@ import Signup from './components/Signup';
 import Product from './components/Product';
 import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
-import 'particles.js';
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadFull } from "tsparticles";
 import './App.css';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [init, setInit] = useState(false);
+
+  // Initialize the tsParticles engine once on mount
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadFull(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
 
   useEffect(() => {
-    // This useEffect is for animations and particles. No changes are needed here.
+    // This useEffect is for animations and the mobile menu.
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const toggleMenu = () => mobileMenu && mobileMenu.classList.toggle('hidden');
@@ -30,14 +41,6 @@ const App = () => {
     const fadeUpElements = document.querySelectorAll('.fade-in-up');
     fadeUpElements.forEach((el) => observer.observe(el));
 
-    if (!document.querySelector('#particles-js canvas')) {
-        window.particlesJS('particles-js', {
-            "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A2BE2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } },
-            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } },
-            "retina_detect": true
-        });
-    }
-
     return () => {
       if (menuBtn) menuBtn.removeEventListener('click', toggleMenu);
       fadeUpElements.forEach((el) => observer.unobserve(el));
@@ -53,12 +56,29 @@ const App = () => {
   const handleFeaturesClick = (e) => { e.preventDefault(); setCurrentPage('features'); };
   const handleHowItWorksClick = (e) => { e.preventDefault(); setCurrentPage('how-it-works'); };
 
+  const particlesOptions = {
+      "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A2BE2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } },
+      "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } },
+      "retina_detect": true
+  };
+
+  const renderParticles = () => {
+    if (!init) return null;
+    return (
+      <Particles
+        id="tsparticles"
+        options={particlesOptions}
+        className="fixed top-0 left-0 w-full h-full z-0"
+      />
+    );
+  };
+
   // --- Page Rendering Logic ---
 
   if (currentPage === 'login' || currentPage === 'signup') {
     return (
       <div className="antialiased">
-        <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
+        {renderParticles()}
         <div className="relative z-10">
           {currentPage === 'login' && <Login onGoBack={handleGoBack} onLoginSuccess={handleAuthSuccess} onSignupClick={handleSignupClick} />}
           {currentPage === 'signup' && <Signup onGoBack={handleGoBack} onSignupSuccess={handleAuthSuccess} onLoginClick={handleLoginClick} />}
@@ -70,6 +90,7 @@ const App = () => {
   if (currentPage === 'product') {
     return (
       <div className="antialiased">
+        {/* Particles are already handled inside the Product component */}
         <Header 
           isAuthenticated={isAuthenticated} 
           onSignOut={handleSignOut} 
@@ -87,7 +108,7 @@ const App = () => {
   // --- Default Pages (Home, Features, How It Works) ---
   return (
     <div className="antialiased">
-      <div id="particles-js"></div>
+      {renderParticles()}
       <div className="relative z-10">
         <Header 
           isAuthenticated={isAuthenticated}
@@ -101,7 +122,6 @@ const App = () => {
         <main className="container mx-auto px-4 sm-px-6 lg:px-8">
             {currentPage === 'home' && (
                 <>
-                    {/* --- THIS SECTION HAS BEEN ADDED --- */}
                     <section className="text-center py-20 md:py-32">
                         <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-4 hero-glow fade-in-up">
                             The #1 AI Teammate for <br /> Your Meetings
@@ -116,8 +136,6 @@ const App = () => {
                         </div>
                     </section>
                     <hr className="my-8 border-gray-800" />
-                    {/* --- END OF ADDED SECTION --- */}
-
                     <Features />
                     <hr className="my-8 border-gray-800" />
                     <HowItWorks />

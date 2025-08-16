@@ -30,10 +30,13 @@ But, it's application is not limited to just business rather, it can be implemen
 Use it whenever and however needed, afterall:
                                     "He that keepeth the meeting’s pace shall reap its harvest."
 
-## Getting Started🟢
+## Getting Started(Local Development) 🟢
 To get started with SECRETARY.AI, follow these steps:
-i. You'll need to have the React App running first. ()
-ii. Once it's up and running, to get the transcription section working, you will have to feed it your own Gemini API key
+i. In the root directory of the project, create a file named " .env.local ".
+ii. Add your API key to this file. FORMAT : " GEMINI_API_KEY =your_actual_google_api_key_here
+iii. Ensure that you add the " .env.local" fil to the .gitignore file to avoid exposing your API key.
+iv. You'll need to have the React App running first.
+v. Once it's up and running, to get the transcription section working, you will have to feed it your own Gemini API key
     go to src-->components-->Product.js--> go to line 146--> const apiKey = "(place your api key here)"
 
 ## Get it to run (IN TERMINAL)🏃‍♂️💨
@@ -41,10 +44,10 @@ ii. Once it's up and running, to get the transcription section working, you will
 2. npm start , from here you'll be redirected to your localhost server/browser.
 
 
-## SCREENSHOTS📸
+## SCREENSHOTS 📸
 
 ![Landing_Page](Landing_page.jpeg)
-This will be the page where ypu will land whenyou open the webpage, it is fairly asy navigating from here.
+This will be the page where you will land when you open the webpage, it is fairly easy navigating from here.
 ![How_it_Works_Page](How_it_works_page.jpeg)
 This is the page where you will get to know how the SECRETARY.AI works. 
 ![Product_page](Product.jpeg)

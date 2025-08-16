@@ -35,13 +35,8 @@ To get started with SECRETARY.AI, follow these steps:
 i. In the root directory of the project, create a file named " .env.local ".
 ii. Add your API key to this file. FORMAT : " GEMINI_API_KEY =your_actual_google_api_key_here
 iii. Ensure that you add the " .env.local" fil to the .gitignore file to avoid exposing your API key.
-iv. You'll need to have the React App running first.
-v. Once it's up and running, to get the transcription section working, you will have to feed it your own Gemini API key
-    go to src-->components-->Product.js--> go to line 146--> const apiKey = "(place your api key here)"
-
-## Get it to run (IN TERMINAL)🏃‍♂️💨
-1. npm install , this command installs all the dependencies required for the project.
-2. npm start , from here you'll be redirected to your localhost server/browser.
+iv. npm install , this command installs all the dependencies required for the project.
+v. npm start , from here you'll be redirected to your localhost server/browser.
 
 
 ## SCREENSHOTS 📸
